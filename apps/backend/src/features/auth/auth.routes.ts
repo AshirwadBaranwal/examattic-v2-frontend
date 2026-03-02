@@ -6,12 +6,10 @@ import { requireAuth } from "../../middleware/auth";
 // ─── Auth Routes ─────────────────────────────────────────────────────────────
 // Thin route layer — delegates all logic to handlers.
 
-const authRoutes = new Hono<AppEnv>();
-
-// Better Auth handler — proxies all auth requests
-authRoutes.on(["POST", "GET"], "/api/auth/**", handleAuthProxy);
-
-// Get current authenticated user
-authRoutes.get("/api/me", requireAuth, handleGetMe);
+const authRoutes = new Hono<AppEnv>()
+    // Better Auth handler — proxies all auth requests
+    .on(["POST", "GET"], "/api/auth/**", handleAuthProxy)
+    // Get current authenticated user
+    .get("/api/me", requireAuth, handleGetMe);
 
 export { authRoutes };
