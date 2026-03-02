@@ -1,45 +1,12 @@
 import type { Context, Next } from "hono";
-import type { Auth } from "../lib/auth";
-
-// ─── Type Definitions ────────────────────────────────────────────────────────
-
-type Env = {
-    Bindings: {
-        DATABASE_URL: string;
-        BETTER_AUTH_SECRET: string;
-        BETTER_AUTH_URL: string;
-    };
-    Variables: {
-        user: AuthUser | null;
-        session: AuthSession | null;
-        auth: Auth;
-    };
-};
-
-type AuthUser = {
-    id: string;
-    name: string;
-    email: string;
-    role: string | null;
-    image: string | null;
-    banned: boolean | null;
-    [key: string]: unknown;
-};
-
-type AuthSession = {
-    id: string;
-    userId: string;
-    token: string;
-    expiresAt: Date;
-    [key: string]: unknown;
-};
+import type { AppEnv, AuthUser, AuthSession } from "../types/app";
 
 // ─── Session Middleware ──────────────────────────────────────────────────────
 /**
  * Attaches user & session (if any) to the Hono context.
  * Does NOT block unauthenticated requests — use `requireAuth` for that.
  */
-export const sessionMiddleware = async (c: Context<Env>, next: Next) => {
+export const sessionMiddleware = async (c: Context<AppEnv>, next: Next) => {
     const auth = c.get("auth");
     try {
         const session = await auth.api.getSession({
@@ -69,7 +36,7 @@ export const sessionMiddleware = async (c: Context<Env>, next: Next) => {
  * @example
  * app.use("/api/protected/*", sessionMiddleware, requireAuth);
  */
-export const requireAuth = async (c: Context<Env>, next: Next) => {
+export const requireAuth = async (c: Context<AppEnv>, next: Next) => {
     const user = c.get("user");
 
     if (!user) {
@@ -93,7 +60,7 @@ export const requireAuth = async (c: Context<Env>, next: Next) => {
  * app.use("/api/shared/*", sessionMiddleware, requireAuth, requireRole("admin", "student"));
  */
 export function requireRole(...roles: string[]) {
-    return async (c: Context<Env>, next: Next) => {
+    return async (c: Context<AppEnv>, next: Next) => {
         const user = c.get("user");
 
         if (!user) {
