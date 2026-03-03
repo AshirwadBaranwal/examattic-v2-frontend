@@ -9,7 +9,9 @@ const ERROR_MAP: Record<string, { status: number; message: string }> = {
     USER_NOT_FOUND: { status: 404, message: "No account found with that email." },
     INVALID_PASSWORD: { status: 401, message: "Incorrect password. Please try again." },
     USER_ALREADY_EXISTS: { status: 409, message: "An account with this email already exists." },
+    USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL: { status: 409, message: "An account with this email already exists." },
     INVALID_EMAIL: { status: 400, message: "Please enter a valid email address." },
+    INVALID_EMAIL_OR_PASSWORD: { status: 401, message: "Invalid email or password." },
     EMAIL_NOT_VERIFIED: { status: 403, message: "Please verify your email before logging in." },
     SESSION_EXPIRED: { status: 401, message: "Your session has expired. Please log in again." },
     INVALID_TOKEN: { status: 401, message: "Invalid or expired token." },
@@ -23,6 +25,18 @@ const ERROR_MAP: Record<string, { status: number; message: string }> = {
     ACCOUNT_NOT_FOUND: { status: 404, message: "Account not found." },
     CREDENTIAL_ACCOUNT_NOT_FOUND: { status: 404, message: "No password set for this account." },
 };
+
+// ─── Partial-match fallback ──────────────────────────────────────────────────
+// If the exact code isn't in the map, check if ANY map key is a prefix of the code.
+// e.g. code "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL" matches key "USER_ALREADY_EXISTS"
+function findPartialMatch(code: string): { status: number; message: string } | undefined {
+    for (const key of Object.keys(ERROR_MAP)) {
+        if (code.startsWith(key) || key.startsWith(code)) {
+            return ERROR_MAP[key];
+        }
+    }
+    return undefined;
+}
 
 // ─── Validation Error Cleaner ────────────────────────────────────────────────
 // Converts Zod-style "[body.field] expected X, received Y" → clean message
@@ -59,7 +73,7 @@ export function sanitizeAuthError(code: string | undefined, rawMessage: string) 
         };
     }
 
-    // 2. Check our known error map
+    // 2. Check our known error map (exact match)
     if (code && ERROR_MAP[code]) {
         const mapped = ERROR_MAP[code];
         return {
@@ -72,7 +86,22 @@ export function sanitizeAuthError(code: string | undefined, rawMessage: string) 
         };
     }
 
-    // 3. Fallback: NEVER leak the raw message — return a generic one
+    // 3. Check partial match (for codes like USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL)
+    if (code) {
+        const partial = findPartialMatch(code);
+        if (partial) {
+            return {
+                status: partial.status,
+                body: {
+                    success: false,
+                    error: code,
+                    message: partial.message,
+                },
+            };
+        }
+    }
+
+    // 4. Fallback: NEVER leak the raw message — return a generic one
     return {
         status: 500,
         body: {
