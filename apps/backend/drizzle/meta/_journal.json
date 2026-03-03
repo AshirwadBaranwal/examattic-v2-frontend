@@ -8,6 +8,13 @@
       "when": 1772452397776,
       "tag": "0000_jittery_norrin_radd",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1772521658209,
+      "tag": "0001_warm_captain_universe",
+      "breakpoints": true
     }
   ]
 }
