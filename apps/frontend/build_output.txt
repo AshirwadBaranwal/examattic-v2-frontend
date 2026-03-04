@@ -1,0 +1,247 @@
+$ next build
+▲ Next.js 16.1.6 (Turbopack)
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 6 errors:
+./apps/frontend/src/app/(admin)/admin/mock/page.tsx
+Error evaluating Node.js code
+SyntaxError: E:\All Websites\examattic-v2\apps\frontend\src\app\(admin)\admin\mock\page.tsx: Identifier 'contentSource' has already been declared. (50:11)
+
+[0m [90m 48 |[39m     [36mconst[39m [selectedExamIds[33m,[39m setSelectedExamIds] [33m=[39m useState[33m<[39m[33mstring[39m[][33m>[39m([])[33m;[39m
+ [90m 49 |[39m     [36mconst[39m [contentSource[33m,[39m setContentSource] [33m=[39m useState[33m<[39m[33mSource[39m [33m|[39m [36mnull[39m[33m>[39m([36mnull[39m)[33m;[39m
+[31m[1m>[22m[39m[90m 50 |[39m     [36mconst[39m [contentSource[33m,[39m setContentSource] [33m=[39m useState[33m<[39m[33mSource[39m [33m|[39m [36mnull[39m[33m>[39m([36mnull[39m)[33m;[39m
+ [90m    |[39m            [31m[1m^[22m[39m
+ [90m 51 |[39m
+ [90m 52 |[39m     [90m// ─── Fetch Mocks ─────────────────────────────────────────────────────────[39m
+ [90m 53 |[39m     [36mconst[39m { data[33m,[39m isLoading } [33m=[39m useQuery({[0m
+    [at constructor (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:137105)]
+    [at TypeScriptParserMixin.raise (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:194164)]
+    [at TypeScriptScopeHandler.checkRedeclarationInScope (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:163166)]
+    [at TypeScriptScopeHandler.declareName (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:162529)]
+    [at TypeScriptScopeHandler.declareName (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:271160)]
+    [at TypeScriptParserMixin.declareNameFromIdentifier (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:279226)]
+    [at TypeScriptParserMixin.checkIdentifier (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:279152)]
+    [at TypeScriptParserMixin.checkLVal (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:278197)]
+    [at TypeScriptParserMixin.checkLVal (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:278727)]
+    [at TypeScriptParserMixin.parseVarId (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:403644)]
+    [at TypeScriptParserMixin.parseVarId (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:329902)]
+    [at TypeScriptParserMixin.parseVar (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:402884)]
+    [at TypeScriptParserMixin.parseVarStatement (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:399366)]
+    [at TypeScriptParserMixin.parseVarStatement (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:323322)]
+    [at TypeScriptParserMixin.parseStatementContent (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:391398)]
+    [at TypeScriptParserMixin.parseStatementContent (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:324042)]
+    [at TypeScriptParserMixin.parseStatementLike (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:389494)]
+    [at TypeScriptParserMixin.parseStatementListItem (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:389120)]
+    [at TypeScriptParserMixin.parseBlockOrModuleBlockBody (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:401423)]
+    [at TypeScriptParserMixin.parseBlockBody (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:401223)]
+    [at TypeScriptParserMixin.parseBlock (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:400923)]
+    [at TypeScriptParserMixin.parseFunctionBody (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:378053)]
+    [at TypeScriptParserMixin.parseFunctionBodyAndFinish (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:377675)]
+    [at TypeScriptParserMixin.parseFunctionBodyAndFinish (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:318173)]
+    [at E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:404308]
+    [at TypeScriptParserMixin.withSmartMixTopicForbiddingContext (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:383677)]
+    [at TypeScriptParserMixin.parseFunction (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:404262)]
+    [at TypeScriptParserMixin.parseExportDefaultExpression (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:414860)]
+    [at TypeScriptParserMixin.parseExportDefaultExpression (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:323209)]
+    [at TypeScriptParserMixin.parseExport (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:413097)]
+    [at TypeScriptParserMixin.parseExport (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:322862)]
+    [at TypeScriptParserMixin.parseStatementContent (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:391808)]
+    [at TypeScriptParserMixin.parseStatementContent (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:324042)]
+    [at TypeScriptParserMixin.parseStatementLike (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:389494)]
+    [at TypeScriptParserMixin.parseModuleItem (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:389055)]
+    [at TypeScriptParserMixin.parseBlockOrModuleBlockBody (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:401400)]
+    [at TypeScriptParserMixin.parseBlockBody (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:401223)]
+    [at TypeScriptParserMixin.parseProgram (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:386857)]
+    [at TypeScriptParserMixin.parseTopLevel (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:386575)]
+    [at TypeScriptParserMixin.parse (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:426834)]
+    [at TypeScriptParserMixin.parse (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:337631)]
+    [at parse (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:427092)]
+    [at parser (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:1:142018)]
+    [at <anonymous>]
+    [at normalizeFile (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:13:13275)]
+    [at <anonymous>]
+    [at consumeIterator (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\build\babel\loader\util.js:13:38)]
+    [at transform (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\build\babel\loader\transform.js:89:44)]
+    [at async (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\build\babel\loader\index.js:36:108)]
+    at async DummySpan.traceAsyncFn (turbopack:///[turbopack-node]/transforms/webpack-loaders.ts:115:12) [E:\All Websites\examattic-v2\apps\frontend\.next\build\chunks\[root-of-the-server]__6e020478._.js:126:16]
+
+Import traces:
+  Client Component Browser:
+    ./apps/frontend/src/app/(admin)/admin/mock/page.tsx [Client Component Browser]
+    ./apps/frontend/src/app/(admin)/admin/mock/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/frontend/src/app/(admin)/admin/mock/page.tsx [Client Component SSR]
+    ./apps/frontend/src/app/(admin)/admin/mock/page.tsx [Server Component]
+
+
+./apps/frontend/src/app/(admin)/admin/pyq/page.tsx
+Error evaluating Node.js code
+SyntaxError: E:\All Websites\examattic-v2\apps\frontend\src\app\(admin)\admin\pyq\page.tsx: Identifier 'contentSource' has already been declared. (50:11)
+
+[0m [90m 48 |[39m     [36mconst[39m [selectedExamIds[33m,[39m setSelectedExamIds] [33m=[39m useState[33m<[39m[33mstring[39m[][33m>[39m([])[33m;[39m
+ [90m 49 |[39m     [36mconst[39m [contentSource[33m,[39m setContentSource] [33m=[39m useState[33m<[39m[33mSource[39m [33m|[39m [36mnull[39m[33m>[39m([36mnull[39m)[33m;[39m
+[31m[1m>[22m[39m[90m 50 |[39m     [36mconst[39m [contentSource[33m,[39m setContentSource] [33m=[39m useState[33m<[39m[33mSource[39m [33m|[39m [36mnull[39m[33m>[39m([36mnull[39m)[33m;[39m
+ [90m    |[39m            [31m[1m^[22m[39m
+ [90m 51 |[39m
+ [90m 52 |[39m     [90m// ─── Fetch PYQs ────────────────────────────────────────────────────────[39m
+ [90m 53 |[39m     [36mconst[39m { data[33m,[39m isLoading } [33m=[39m useQuery({[0m
+    [at constructor (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:137105)]
+    [at TypeScriptParserMixin.raise (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:194164)]
+    [at TypeScriptScopeHandler.checkRedeclarationInScope (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:163166)]
+    [at TypeScriptScopeHandler.declareName (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:162529)]
+    [at TypeScriptScopeHandler.declareName (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:271160)]
+    [at TypeScriptParserMixin.declareNameFromIdentifier (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:279226)]
+    [at TypeScriptParserMixin.checkIdentifier (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:279152)]
+    [at TypeScriptParserMixin.checkLVal (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:278197)]
+    [at TypeScriptParserMixin.checkLVal (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:278727)]
+    [at TypeScriptParserMixin.parseVarId (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:403644)]
+    [at TypeScriptParserMixin.parseVarId (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:329902)]
+    [at TypeScriptParserMixin.parseVar (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:402884)]
+    [at TypeScriptParserMixin.parseVarStatement (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:399366)]
+    [at TypeScriptParserMixin.parseVarStatement (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:323322)]
+    [at TypeScriptParserMixin.parseStatementContent (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:391398)]
+    [at TypeScriptParserMixin.parseStatementContent (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:324042)]
+    [at TypeScriptParserMixin.parseStatementLike (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:389494)]
+    [at TypeScriptParserMixin.parseStatementListItem (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:389120)]
+    [at TypeScriptParserMixin.parseBlockOrModuleBlockBody (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:401423)]
+    [at TypeScriptParserMixin.parseBlockBody (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:401223)]
+    [at TypeScriptParserMixin.parseBlock (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:400923)]
+    [at TypeScriptParserMixin.parseFunctionBody (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:378053)]
+    [at TypeScriptParserMixin.parseFunctionBodyAndFinish (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:377675)]
+    [at TypeScriptParserMixin.parseFunctionBodyAndFinish (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:318173)]
+    [at E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:404308]
+    [at TypeScriptParserMixin.withSmartMixTopicForbiddingContext (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:383677)]
+    [at TypeScriptParserMixin.parseFunction (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:404262)]
+    [at TypeScriptParserMixin.parseExportDefaultExpression (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:414860)]
+    [at TypeScriptParserMixin.parseExportDefaultExpression (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:323209)]
+    [at TypeScriptParserMixin.parseExport (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:413097)]
+    [at TypeScriptParserMixin.parseExport (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:322862)]
+    [at TypeScriptParserMixin.parseStatementContent (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:391808)]
+    [at TypeScriptParserMixin.parseStatementContent (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:324042)]
+    [at TypeScriptParserMixin.parseStatementLike (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:389494)]
+    [at TypeScriptParserMixin.parseModuleItem (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:389055)]
+    [at TypeScriptParserMixin.parseBlockOrModuleBlockBody (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:401400)]
+    [at TypeScriptParserMixin.parseBlockBody (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:401223)]
+    [at TypeScriptParserMixin.parseProgram (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:386857)]
+    [at TypeScriptParserMixin.parseTopLevel (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:386575)]
+    [at TypeScriptParserMixin.parse (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:426834)]
+    [at TypeScriptParserMixin.parse (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:337631)]
+    [at parse (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:191:427092)]
+    [at parser (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:1:142018)]
+    [at <anonymous>]
+    [at normalizeFile (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\compiled\babel\bundle.js:13:13275)]
+    [at <anonymous>]
+    [at consumeIterator (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\build\babel\loader\util.js:13:38)]
+    [at transform (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\build\babel\loader\transform.js:89:44)]
+    [at async (E:\All Websites\examattic-v2\node_modules\.bun\next@16.1.6+a8e167bbfea182cf\node_modules\next\dist\build\babel\loader\index.js:36:108)]
+    at async DummySpan.traceAsyncFn (turbopack:///[turbopack-node]/transforms/webpack-loaders.ts:115:12) [E:\All Websites\examattic-v2\apps\frontend\.next\build\chunks\[root-of-the-server]__6e020478._.js:126:16]
+
+Import traces:
+  Client Component Browser:
+    ./apps/frontend/src/app/(admin)/admin/pyq/page.tsx [Client Component Browser]
+    ./apps/frontend/src/app/(admin)/admin/pyq/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/frontend/src/app/(admin)/admin/pyq/page.tsx [Client Component SSR]
+    ./apps/frontend/src/app/(admin)/admin/pyq/page.tsx [Server Component]
+
+
+./apps/frontend/src/app/(admin)/admin/mock/page.tsx:50:12
+Ecmascript file had an error
+[0m [90m 48 |[39m     [36mconst[39m [selectedExamIds[33m,[39m setSelectedExamIds] [33m=[39m useState[33m<[39m[33mstring[39m[][33m>[39m([])[33m;[39m
+ [90m 49 |[39m     [36mconst[39m [contentSource[33m,[39m setContentSource] [33m=[39m useState[33m<[39m[33mSource[39m [33m|[39m [36mnull[39m[33m>[39m([36mnull[39m)[33m;[39m
+[31m[1m>[22m[39m[90m 50 |[39m     [36mconst[39m [contentSource[33m,[39m setContentSource] [33m=[39m useState[33m<[39m[33mSource[39m [33m|[39m [36mnull[39m[33m>[39m([36mnull[39m)[33m;[39m
+ [90m    |[39m            [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 51 |[39m
+ [90m 52 |[39m     [90m// ─── Fetch Mocks ─────────────────────────────────────────────────────────[39m
+ [90m 53 |[39m     [36mconst[39m { data[33m,[39m isLoading } [33m=[39m useQuery({[0m
+
+the name `contentSource` is defined multiple times
+
+Import traces:
+  Client Component Browser:
+    ./apps/frontend/src/app/(admin)/admin/mock/page.tsx [Client Component Browser]
+    ./apps/frontend/src/app/(admin)/admin/mock/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/frontend/src/app/(admin)/admin/mock/page.tsx [Client Component SSR]
+    ./apps/frontend/src/app/(admin)/admin/mock/page.tsx [Server Component]
+
+
+./apps/frontend/src/app/(admin)/admin/mock/page.tsx:50:27
+Ecmascript file had an error
+[0m [90m 48 |[39m     [36mconst[39m [selectedExamIds[33m,[39m setSelectedExamIds] [33m=[39m useState[33m<[39m[33mstring[39m[][33m>[39m([])[33m;[39m
+ [90m 49 |[39m     [36mconst[39m [contentSource[33m,[39m setContentSource] [33m=[39m useState[33m<[39m[33mSource[39m [33m|[39m [36mnull[39m[33m>[39m([36mnull[39m)[33m;[39m
+[31m[1m>[22m[39m[90m 50 |[39m     [36mconst[39m [contentSource[33m,[39m setContentSource] [33m=[39m useState[33m<[39m[33mSource[39m [33m|[39m [36mnull[39m[33m>[39m([36mnull[39m)[33m;[39m
+ [90m    |[39m                           [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 51 |[39m
+ [90m 52 |[39m     [90m// ─── Fetch Mocks ─────────────────────────────────────────────────────────[39m
+ [90m 53 |[39m     [36mconst[39m { data[33m,[39m isLoading } [33m=[39m useQuery({[0m
+
+the name `setContentSource` is defined multiple times
+
+Import traces:
+  Client Component Browser:
+    ./apps/frontend/src/app/(admin)/admin/mock/page.tsx [Client Component Browser]
+    ./apps/frontend/src/app/(admin)/admin/mock/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/frontend/src/app/(admin)/admin/mock/page.tsx [Client Component SSR]
+    ./apps/frontend/src/app/(admin)/admin/mock/page.tsx [Server Component]
+
+
+./apps/frontend/src/app/(admin)/admin/pyq/page.tsx:50:12
+Ecmascript file had an error
+[0m [90m 48 |[39m     [36mconst[39m [selectedExamIds[33m,[39m setSelectedExamIds] [33m=[39m useState[33m<[39m[33mstring[39m[][33m>[39m([])[33m;[39m
+ [90m 49 |[39m     [36mconst[39m [contentSource[33m,[39m setContentSource] [33m=[39m useState[33m<[39m[33mSource[39m [33m|[39m [36mnull[39m[33m>[39m([36mnull[39m)[33m;[39m
+[31m[1m>[22m[39m[90m 50 |[39m     [36mconst[39m [contentSource[33m,[39m setContentSource] [33m=[39m useState[33m<[39m[33mSource[39m [33m|[39m [36mnull[39m[33m>[39m([36mnull[39m)[33m;[39m
+ [90m    |[39m            [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 51 |[39m
+ [90m 52 |[39m     [90m// ─── Fetch PYQs ────────────────────────────────────────────────────────[39m
+ [90m 53 |[39m     [36mconst[39m { data[33m,[39m isLoading } [33m=[39m useQuery({[0m
+
+the name `contentSource` is defined multiple times
+
+Import traces:
+  Client Component Browser:
+    ./apps/frontend/src/app/(admin)/admin/pyq/page.tsx [Client Component Browser]
+    ./apps/frontend/src/app/(admin)/admin/pyq/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/frontend/src/app/(admin)/admin/pyq/page.tsx [Client Component SSR]
+    ./apps/frontend/src/app/(admin)/admin/pyq/page.tsx [Server Component]
+
+
+./apps/frontend/src/app/(admin)/admin/pyq/page.tsx:50:27
+Ecmascript file had an error
+[0m [90m 48 |[39m     [36mconst[39m [selectedExamIds[33m,[39m setSelectedExamIds] [33m=[39m useState[33m<[39m[33mstring[39m[][33m>[39m([])[33m;[39m
+ [90m 49 |[39m     [36mconst[39m [contentSource[33m,[39m setContentSource] [33m=[39m useState[33m<[39m[33mSource[39m [33m|[39m [36mnull[39m[33m>[39m([36mnull[39m)[33m;[39m
+[31m[1m>[22m[39m[90m 50 |[39m     [36mconst[39m [contentSource[33m,[39m setContentSource] [33m=[39m useState[33m<[39m[33mSource[39m [33m|[39m [36mnull[39m[33m>[39m([36mnull[39m)[33m;[39m
+ [90m    |[39m                           [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 51 |[39m
+ [90m 52 |[39m     [90m// ─── Fetch PYQs ────────────────────────────────────────────────────────[39m
+ [90m 53 |[39m     [36mconst[39m { data[33m,[39m isLoading } [33m=[39m useQuery({[0m
+
+the name `setContentSource` is defined multiple times
+
+Import traces:
+  Client Component Browser:
+    ./apps/frontend/src/app/(admin)/admin/pyq/page.tsx [Client Component Browser]
+    ./apps/frontend/src/app/(admin)/admin/pyq/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/frontend/src/app/(admin)/admin/pyq/page.tsx [Client Component SSR]
+    ./apps/frontend/src/app/(admin)/admin/pyq/page.tsx [Server Component]
+
+
+    at async DummySpan.traceAsyncFn (turbopack:///[turbopack-node]/transforms/webpack-loaders.ts:115:12) [E:\All Websites\examattic-v2\apps\frontend\.next\build\chunks\[root-of-the-server]__6e020478._.js:126:16])
+    at async DummySpan.traceAsyncFn (turbopack:///[turbopack-node]/transforms/webpack-loaders.ts:115:12) [E:\All Websites\examattic-v2\apps\frontend\.next\build\chunks\[root-of-the-server]__6e020478._.js:126:16])
+    at <unknown> (./apps/frontend/src/app/(admin)/admin/mock/page.tsx:50:12)
+    at <unknown> (./apps/frontend/src/app/(admin)/admin/mock/page.tsx:50:27)
+    at <unknown> (./apps/frontend/src/app/(admin)/admin/pyq/page.tsx:50:12)
+    at <unknown> (./apps/frontend/src/app/(admin)/admin/pyq/page.tsx:50:27)
+error: script "build" exited with code 1

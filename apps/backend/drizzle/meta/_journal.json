@@ -15,6 +15,13 @@
       "when": 1772521658209,
       "tag": "0001_warm_captain_universe",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1772600781146,
+      "tag": "0002_white_loki",
+      "breakpoints": true
     }
   ]
 }

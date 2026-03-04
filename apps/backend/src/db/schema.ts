@@ -18,7 +18,7 @@ import { relations } from "drizzle-orm";
 
 export const roleEnum = pgEnum("role", ["student", "admin"]);
 export const difficultyEnum = pgEnum("difficulty", ["easy", "medium", "hard"]);
-export const sourceTypeEnum = pgEnum("source_type", ["pyq", "mock", "book"]);
+export const sourceTypeEnum = pgEnum("source_type", ["pyq", "mock"]);
 export const sourceStatusEnum = pgEnum("source_status", ["draft", "published"]);
 export const testAttemptStatusEnum = pgEnum("test_attempt_status", [
     "in_progress",
@@ -229,7 +229,7 @@ export const examSubject = pgTable(
 );
 
 // ============================================================================
-// UNIFIED SOURCE TABLE (PYQ / Mock / Book)
+// UNIFIED SOURCE TABLE (PYQ / Mock)
 // ============================================================================
 
 export const source = pgTable(
@@ -240,7 +240,7 @@ export const source = pgTable(
         title: text("title").notNull(),
         slug: text("slug").notNull(),
 
-        // Exam link (required for pyq/mock, optional for book)
+        // Exam link (required for pyq/mock)
         examId: text("exam_id").references(() => exam.id, {
             onDelete: "set null",
         }),
@@ -249,14 +249,7 @@ export const source = pgTable(
         sessionDate: timestamp("session_date", { mode: "date" }),
         shift: integer("shift"),
 
-        // Book-specific fields
-        author: text("author"),
-        publisher: text("publisher"),
-        edition: text("edition"),
-        isbn: text("isbn"),
-        coverImage: text("cover_image"),
-
-        // Test configuration (for pyq & mock, null for books)
+        // Test configuration (for pyq & mock)
         duration: integer("duration"),
         totalQuestions: integer("total_questions").default(0),
         totalMarks: decimal("total_marks", { precision: 8, scale: 2 }).default(
