@@ -31,7 +31,7 @@ export function createApp() {
     app.use(
         "*",
         cors({
-            origin: ["http://localhost:3000", "https://examattic-v2.pages.dev"],
+            origin: ["http://localhost:3000", "https://examattic-v2-frontend.examattic.workers.dev"],
             allowHeaders: ["Content-Type", "Authorization"],
             allowMethods: ["POST", "GET", "OPTIONS", "PUT", "DELETE", "PATCH"],
             exposeHeaders: ["Content-Length"],
