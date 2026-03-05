@@ -31,10 +31,22 @@ export function createApp() {
     app.use(
         "*",
         cors({
-            origin: ["http://localhost:3000", "https://examattic-v2-frontend.examattic.workers.dev"],
-            allowHeaders: ["Content-Type", "Authorization"],
+            origin: (origin) => {
+                const allowedOrigins = [
+                    "http://localhost:3000",
+                    "https://examattic-v2-frontend.examattic.workers.dev"
+                ];
+                // If origin is in allowed list, return it.
+                // Note: browser origins never have trailing slashes.
+                if (allowedOrigins.includes(origin)) {
+                    return origin;
+                }
+                // Fallback for development or if origin is missing
+                return allowedOrigins[1];
+            },
+            allowHeaders: ["Content-Type", "Authorization", "x-better-auth-secret"],
             allowMethods: ["POST", "GET", "OPTIONS", "PUT", "DELETE", "PATCH"],
-            exposeHeaders: ["Content-Length"],
+            exposeHeaders: ["Content-Length", "Set-Cookie"],
             maxAge: 600,
             credentials: true,
         })

@@ -69,7 +69,14 @@ export const handleAuthProxy = async (c: Context<AppEnv>) => {
         return c.json(safeBody, response.status as any);
     }
 
-    return response;
+    // For successful responses, we return them.
+    // However, we wrap it in a new Response to ensure Hono's middleware
+    // can reliably append headers if it needs to.
+    return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers: response.headers,
+    });
 };
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
