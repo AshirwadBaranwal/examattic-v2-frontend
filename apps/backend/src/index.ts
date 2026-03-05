@@ -5,6 +5,7 @@ import { subjectRoutes } from "./features/subjects/subject.routes";
 import { chapterRoutes } from "./features/chapters/chapter.routes";
 import { questionRoutes } from "./features/questions/question.routes";
 import { sourceRoutes } from "./features/sources/source.routes";
+import { sectionRoutes } from "./features/sources/section.routes";
 
 // ─── Create App ──────────────────────────────────────────────────────────────
 const app = createApp();
@@ -17,6 +18,7 @@ const routes = app
   .route("/", chapterRoutes)
   .route("/", questionRoutes)
   .route("/", sourceRoutes)
+  .route("/", sectionRoutes)
 
   // ─── Health Check ──────────────────────────────────────────────────────────
   .get("/", (c) => {

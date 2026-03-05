@@ -8,12 +8,6 @@ import { ClipboardList, Plus, Loader2, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-} from "@/components/ui/dialog";
-import {
     Popover,
     PopoverContent,
     PopoverTrigger,
@@ -35,8 +29,6 @@ import { defaultMockForm } from "../sources/_components/types";
 import { SourceCard } from "../sources/_components/source-card";
 import { SourceModal } from "../sources/_components/source-modal";
 import { DeleteDialog } from "../sources/_components/delete-dialog";
-// Import placeholder for content dialog (you can create pyq-content later)
-// import { SourceContentDialog } from "../sources/_components/source-content-dialog";
 
 export default function AdminMockPage() {
     const queryClient = useQueryClient();
@@ -46,7 +38,7 @@ export default function AdminMockPage() {
     const [deleteId, setDeleteId] = useState<string | null>(null);
     const [search, setSearch] = useState("");
     const [selectedExamIds, setSelectedExamIds] = useState<string[]>([]);
-    const [contentSource, setContentSource] = useState<Source | null>(null);
+
 
     // ─── Fetch Mocks ─────────────────────────────────────────────────────────
     const { data, isLoading } = useQuery({
@@ -303,7 +295,6 @@ export default function AdminMockPage() {
                             onEdit={openEdit}
                             onDelete={setDeleteId}
                             onToggleStatus={(src) => toggleStatusMutation.mutate(src.id)}
-                            onManageContent={setContentSource}
                         />
                     ))}
                 </div>
@@ -331,14 +322,6 @@ export default function AdminMockPage() {
                 isPending={deleteMutation.isPending}
             />
 
-            <Dialog open={!!contentSource} onOpenChange={() => setContentSource(null)}>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>Content Management coming soon</DialogTitle>
-                    </DialogHeader>
-                    <div>Building section builder in next phase.</div>
-                </DialogContent>
-            </Dialog>
         </div>
     );
 }

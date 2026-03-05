@@ -37,6 +37,8 @@ export const queryKeys = {
         pyq: ["sources", "pyq"] as const,
         mock: ["sources", "mock"] as const,
         detail: (id: string) => ["sources", "detail", id] as const,
+        sections: (sourceId: string) =>
+            ["sources", "sections", sourceId] as const,
     },
 
     // ─── Subjects ────────────────────────────────────────────

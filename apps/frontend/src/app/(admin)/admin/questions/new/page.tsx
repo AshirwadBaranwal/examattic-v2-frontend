@@ -36,7 +36,7 @@ export default function AddQuestionPage() {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
-                body: JSON.stringify(body),
+                body: JSON.stringify({ ...body, sourceId: sourceId ?? undefined }),
             });
             if (!res.ok) throw new Error("Failed to create question");
             return res.json();

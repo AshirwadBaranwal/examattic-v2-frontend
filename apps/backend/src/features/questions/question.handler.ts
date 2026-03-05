@@ -1,7 +1,7 @@
 import type { Context } from "hono";
 import type { AppEnv } from "../../types/app";
 import { createDb } from "../../db";
-import { question, questionOption, chapter, subject } from "../../db/schema";
+import { question, questionOption, questionAppearance, chapter, subject } from "../../db/schema";
 import { eq, and, like, sql, desc, asc } from "drizzle-orm";
 import { nanoid } from "nanoid";
 
@@ -25,6 +25,7 @@ interface QuestionInput {
     negativeMarks?: string | null;
     isPyq: boolean;
     options: OptionInput[];
+    sourceId?: string | null;
 }
 
 // ─── Get single question ─────────────────────────────────────────────────────
@@ -221,6 +222,16 @@ export const createQuestion = async (c: Context<AppEnv>) => {
         .select()
         .from(questionOption)
         .where(eq(questionOption.questionId, questionId));
+
+    // If sourceId is provided, link question to source via questionAppearance
+    if (body.sourceId) {
+        await db.insert(questionAppearance).values({
+            id: nanoid(),
+            questionId,
+            sourceId: body.sourceId,
+            order: 0,
+        });
+    }
 
     return c.json({ data: { ...created, options } }, 201);
 };

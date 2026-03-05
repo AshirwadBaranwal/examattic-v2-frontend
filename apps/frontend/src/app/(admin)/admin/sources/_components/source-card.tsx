@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { useRouter } from "next/navigation";
 import {
     Card,
     CardContent,
@@ -31,7 +32,6 @@ interface SourceCardProps {
     onEdit: (source: Source) => void;
     onDelete: (id: string) => void;
     onToggleStatus: (source: Source) => void;
-    onManageContent: (source: Source) => void;
 }
 
 export function SourceCard({
@@ -39,9 +39,13 @@ export function SourceCard({
     onEdit,
     onDelete,
     onToggleStatus,
-    onManageContent,
 }: SourceCardProps) {
+    const router = useRouter();
     const isPyq = source.type === "pyq";
+
+    const handleManageContent = () => {
+        router.push(`/admin/${source.type}/${source.id}`);
+    };
 
     return (
         <Card className="flex h-full flex-col hover:border-primary/50 transition-colors">
@@ -120,11 +124,23 @@ export function SourceCard({
                 </div>
             </CardContent>
 
-            <CardFooter className="pt-4 border-t">
+            <CardFooter className="pt-4 border-t gap-2">
+                <Button
+                    variant="outline"
+                    className="flex-1 gap-2"
+                    onClick={() =>
+                        router.push(
+                            `/admin/questions/new?sourceId=${source.id}${source.examId ? `&examId=${source.examId}` : ""}${source.title ? `&sourceTitle=${encodeURIComponent(source.title)}` : ""}`
+                        )
+                    }
+                >
+                    <FileQuestion className="h-4 w-4" />
+                    Add Questions
+                </Button>
                 <Button
                     variant="secondary"
-                    className="w-full gap-2"
-                    onClick={() => onManageContent(source)}
+                    className="flex-1 gap-2"
+                    onClick={handleManageContent}
                 >
                     <LayoutTemplate className="h-4 w-4" />
                     Manage Content

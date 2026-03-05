@@ -291,12 +291,6 @@ export const testSection = pgTable(
         order: integer("order").notNull().default(0),
         timeLimit: integer("time_limit"), // minutes, null = no section-specific limit
 
-        // Per-section scoring config (moved from JSON blob)
-        marks: decimal("marks", { precision: 4, scale: 2 }),
-        negativeMarks: decimal("negative_marks", { precision: 4, scale: 2 }),
-        questionCount: integer("question_count"),
-        questionLimit: integer("question_limit"), // how many the student must attempt
-
         createdAt: timestamp("created_at").notNull().defaultNow(),
         updatedAt: timestamp("updated_at").notNull().defaultNow(),
     },
@@ -316,6 +310,13 @@ export const testSectionSubject = pgTable(
         subjectId: text("subject_id")
             .notNull()
             .references(() => subject.id, { onDelete: "cascade" }),
+
+        // Per-subject scoring config
+        marks: decimal("marks", { precision: 4, scale: 2 }).default("4.00"),
+        negativeMarks: decimal("negative_marks", { precision: 4, scale: 2 }).default("1.00"),
+        questionCount: integer("question_count").default(0),
+        questionLimit: integer("question_limit"), // how many the student must attempt
+
         createdAt: timestamp("created_at").notNull().defaultNow(),
     },
     (table) => [
