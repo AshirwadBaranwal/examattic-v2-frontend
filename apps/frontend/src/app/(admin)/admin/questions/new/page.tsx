@@ -32,7 +32,7 @@ export default function AddQuestionPage() {
     // Create mutation
     const createMutation = useMutation({
         mutationFn: async (body: QuestionFormData) => {
-            const res = await fetch("http://localhost:8787/api/admin/questions", {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8787"}/api/admin/questions`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",

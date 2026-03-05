@@ -33,7 +33,7 @@ export default function EditQuestionPage() {
     const { data, isLoading } = useQuery({
         queryKey: queryKeys.questions.detail(questionId),
         queryFn: async () => {
-            const res = await fetch(`http://localhost:8787/api/admin/questions/${questionId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8787"}/api/admin/questions/${questionId}`, {
                 credentials: "include",
             });
             if (!res.ok) throw new Error("Failed");
@@ -69,7 +69,7 @@ export default function EditQuestionPage() {
     // Update mutation
     const updateMutation = useMutation({
         mutationFn: async (body: Partial<QuestionFormData>) => {
-            const res = await fetch(`http://localhost:8787/api/admin/questions/${questionId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8787"}/api/admin/questions/${questionId}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",

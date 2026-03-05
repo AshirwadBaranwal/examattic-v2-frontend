@@ -74,7 +74,7 @@ export default function AdminQuestionsPage() {
             searchP.set("limit", String(LIMIT));
 
             const res = await fetch(
-                `http://localhost:8787/api/admin/questions?${searchP.toString()}`,
+                `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8787"}/api/admin/questions?${searchP.toString()}`,
                 { credentials: "include" }
             );
             if (!res.ok) throw new Error("Failed to fetch questions");
@@ -109,7 +109,7 @@ export default function AdminQuestionsPage() {
     // ─── Delete mutation ─────────────────────────────────────────────────────
     const deleteMutation = useMutation({
         mutationFn: async (id: string) => {
-            const res = await fetch(`http://localhost:8787/api/admin/questions/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8787"}/api/admin/questions/${id}`, {
                 method: "DELETE",
                 credentials: "include",
             });
