@@ -23,7 +23,8 @@ import {
     Clock,
     Calendar,
     FileQuestion,
-    LayoutTemplate
+    LayoutTemplate,
+    Eye,
 } from "lucide-react";
 import type { Source } from "./types";
 
@@ -124,7 +125,19 @@ export function SourceCard({
                 </div>
             </CardContent>
 
-            <CardFooter className="pt-4 border-t gap-2">
+            <CardFooter className="pt-4 border-t gap-2 flex-wrap">
+                <Button
+                    variant="outline"
+                    className="flex-1 gap-2"
+                    onClick={() =>
+                        router.push(
+                            `/admin/questions?sourceId=${source.id}&sourceTitle=${encodeURIComponent(source.title)}`
+                        )
+                    }
+                >
+                    <Eye className="h-4 w-4" />
+                    View Questions
+                </Button>
                 <Button
                     variant="outline"
                     className="flex-1 gap-2"

@@ -1,8 +1,8 @@
 import type { Context } from "hono";
 import type { AppEnv } from "../../types/app";
 import { createDb } from "../../db";
-import { question, questionOption, questionAppearance, chapter, subject } from "../../db/schema";
-import { eq, and, like, sql, desc, asc } from "drizzle-orm";
+import { question, questionOption, questionAppearance, chapter, subject, source } from "../../db/schema";
+import { eq, and, like, sql, desc, asc, inArray } from "drizzle-orm";
 import { nanoid } from "nanoid";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -66,10 +66,21 @@ export const getQuestion = async (c: Context<AppEnv>) => {
         .from(questionOption)
         .where(eq(questionOption.questionId, id));
 
-    return c.json({ data: { ...found, options } });
+    // Fetch source appearances for this question
+    const appearances = await db
+        .select({
+            sourceId: questionAppearance.sourceId,
+            sourceTitle: source.title,
+            sourceType: source.type,
+            order: questionAppearance.order,
+        })
+        .from(questionAppearance)
+        .leftJoin(source, eq(questionAppearance.sourceId, source.id))
+        .where(eq(questionAppearance.questionId, id));
+
+    return c.json({ data: { ...found, options, appearances } });
 };
 
-// ─── List questions (with filters + pagination) ──────────────────────────────
 export const listQuestions = async (c: Context<AppEnv>) => {
     const db = createDb(c.env.DATABASE_URL);
 
@@ -78,12 +89,65 @@ export const listQuestions = async (c: Context<AppEnv>) => {
     const difficulty = c.req.query("difficulty") as "easy" | "medium" | "hard" | undefined;
     const isPyq = c.req.query("isPyq");
     const search = c.req.query("search");
+    const sourceId = c.req.query("sourceId");
+    const questionId = c.req.query("questionId");
     const page = parseInt(c.req.query("page") ?? "1", 10);
     const limit = parseInt(c.req.query("limit") ?? "20", 10);
+    const cursor = c.req.query("cursor"); // Format: "timestamp,id"
     const offset = (page - 1) * limit;
+
+    // Exact ID search — return single result quickly
+    if (questionId) {
+        const [found] = await db
+            .select({
+                id: question.id,
+                chapterId: question.chapterId,
+                content: question.content,
+                description: question.description,
+                image: question.image,
+                explanation: question.explanation,
+                explanationImage: question.explanationImage,
+                difficulty: question.difficulty,
+                marks: question.marks,
+                negativeMarks: question.negativeMarks,
+                isPyq: question.isPyq,
+                isActive: question.isActive,
+                createdAt: question.createdAt,
+                chapterName: chapter.name,
+                subjectId: chapter.subjectId,
+                subjectName: subject.name,
+            })
+            .from(question)
+            .leftJoin(chapter, eq(question.chapterId, chapter.id))
+            .leftJoin(subject, eq(chapter.subjectId, subject.id))
+            .where(eq(question.id, questionId));
+
+        if (!found) {
+            return c.json({ data: [], pagination: { page: 1, limit, total: 0, totalPages: 0, nextCursor: null } });
+        }
+
+        const options = await db
+            .select()
+            .from(questionOption)
+            .where(eq(questionOption.questionId, questionId));
+
+        return c.json({
+            data: [{ ...found, options }],
+            pagination: { page: 1, limit, total: 1, totalPages: 1, nextCursor: null },
+        });
+    }
 
     // Build conditions
     const conditions = [];
+
+    // Source filter — get question IDs linked to this source
+    if (sourceId) {
+        const linkedQuestionIds = db
+            .select({ id: questionAppearance.questionId })
+            .from(questionAppearance)
+            .where(eq(questionAppearance.sourceId, sourceId));
+        conditions.push(sql`${question.id} IN (${linkedQuestionIds})`);
+    }
 
     if (chapterId) {
         conditions.push(eq(question.chapterId, chapterId));
@@ -110,6 +174,19 @@ export const listQuestions = async (c: Context<AppEnv>) => {
         conditions.push(like(question.content, `%${search}%`));
     }
 
+    // Cursor condition
+    if (cursor) {
+        const [createdAtStr, idStr] = cursor.split(",");
+        if (createdAtStr && idStr) {
+            const cursorDate = new Date(createdAtStr);
+            // (createdAt < cursorDate) OR (createdAt = cursorDate AND id < idStr)
+            // Note: Since we order by desc(createdAt), desc(id), we use < for the cursor
+            conditions.push(
+                sql`(${question.createdAt} < ${cursorDate.toISOString()} OR (${question.createdAt} = ${cursorDate.toISOString()} AND ${question.id} < ${idStr}))`
+            );
+        }
+    }
+
     const whereClause = conditions.length > 0 ? and(...conditions) : undefined;
 
     // Get total count
@@ -119,7 +196,10 @@ export const listQuestions = async (c: Context<AppEnv>) => {
         .where(whereClause);
 
     // Get questions with chapter + subject info
-    const questions = await db
+    // We add +1 to limit to check if there is a next page
+    const queryLimit = cursor ? limit + 1 : limit;
+
+    let query = db
         .select({
             id: question.id,
             chapterId: question.chapterId,
@@ -142,9 +222,22 @@ export const listQuestions = async (c: Context<AppEnv>) => {
         .leftJoin(chapter, eq(question.chapterId, chapter.id))
         .leftJoin(subject, eq(chapter.subjectId, subject.id))
         .where(whereClause)
-        .orderBy(desc(question.createdAt))
-        .limit(limit)
-        .offset(offset);
+        .orderBy(desc(question.createdAt), desc(question.id))
+        .limit(queryLimit);
+
+    if (!cursor) {
+        query = query.offset(offset) as any;
+    }
+
+    const questionsResult = await query;
+
+    let hasNextPage = false;
+    let questions = questionsResult;
+
+    if (cursor && questionsResult.length > limit) {
+        hasNextPage = true;
+        questions = questionsResult.slice(0, limit);
+    }
 
     // Get options for all questions
     const questionIds = questions.map((q) => q.id);
@@ -169,13 +262,20 @@ export const listQuestions = async (c: Context<AppEnv>) => {
         options: optionsMap[q.id] ?? [],
     }));
 
+    let nextCursor = null;
+    if (cursor && hasNextPage) {
+        const lastQuestion = questions[questions.length - 1];
+        nextCursor = `${lastQuestion.createdAt.toISOString()},${lastQuestion.id}`;
+    }
+
     return c.json({
         data,
         pagination: {
-            page,
+            page: cursor ? undefined : page,
             limit,
-            total: count,
-            totalPages: Math.ceil(count / limit),
+            total: cursor ? undefined : count,
+            totalPages: cursor ? undefined : Math.ceil(count / limit),
+            nextCursor,
         },
     });
 };
@@ -279,6 +379,35 @@ export const updateQuestion = async (c: Context<AppEnv>) => {
                     isCorrect: opt.isCorrect,
                 }))
             );
+        }
+    }
+
+    // Handle source linkage changes
+    if (body.sourceId !== undefined) {
+        if (body.sourceId) {
+            // Upsert — link to source if not already linked
+            const [existing] = await db
+                .select()
+                .from(questionAppearance)
+                .where(
+                    and(
+                        eq(questionAppearance.questionId, id),
+                        eq(questionAppearance.sourceId, body.sourceId)
+                    )
+                );
+            if (!existing) {
+                await db.insert(questionAppearance).values({
+                    id: nanoid(),
+                    questionId: id,
+                    sourceId: body.sourceId,
+                    order: 0,
+                });
+            }
+        } else {
+            // Detach from all sources (sourceId is null)
+            await db
+                .delete(questionAppearance)
+                .where(eq(questionAppearance.questionId, id));
         }
     }
 

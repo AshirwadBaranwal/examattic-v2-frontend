@@ -29,6 +29,13 @@ export interface Question {
     subjectId: string | null;
     subjectName: string | null;
     options: QuestionOption[];
+    // Source appearances (from getQuestion)
+    appearances?: {
+        sourceId: string;
+        sourceTitle: string | null;
+        sourceType: string | null;
+        order: number;
+    }[];
 }
 
 export interface OptionFormData {

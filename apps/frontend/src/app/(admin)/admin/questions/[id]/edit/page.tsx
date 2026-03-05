@@ -4,8 +4,9 @@ import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/query-keys";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2, Copy, Check, Link as LinkIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 
 import type { Question, QuestionFormData } from "../../_components/types";
@@ -20,6 +21,13 @@ export default function EditQuestionPage() {
     const questionId = params.id as string;
 
     const [form, setForm] = useState<QuestionFormData>(defaultQuestionForm);
+    const [copied, setCopied] = useState(false);
+
+    const copyId = () => {
+        navigator.clipboard.writeText(questionId);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500);
+    };
 
     // Fetch existing question
     const { data, isLoading } = useQuery({
@@ -91,13 +99,40 @@ export default function EditQuestionPage() {
     return (
         <div className="flex flex-col h-[calc(100vh-4rem)]">
             {/* Top bar */}
-            <div className="flex items-center gap-3 border-b px-6 py-3 bg-background shrink-0">
-                <Button variant="ghost" size="icon" asChild>
-                    <Link href="/admin/questions">
-                        <ArrowLeft className="size-4" />
-                    </Link>
-                </Button>
-                <h1 className="text-lg font-semibold">Edit Question</h1>
+            <div className="flex items-center justify-between border-b px-6 py-3 bg-background shrink-0">
+                <div className="flex items-center gap-3">
+                    <Button variant="ghost" size="icon" asChild className="shrink-0">
+                        <Link href="/admin/questions">
+                            <ArrowLeft className="size-4" />
+                        </Link>
+                    </Button>
+                    <div className="flex flex-col">
+                        <div className="flex items-center gap-2">
+                            <h1 className="text-lg font-semibold">Edit Question</h1>
+                            <Badge
+                                variant="outline"
+                                className="font-mono text-xs cursor-pointer hover:bg-muted gap-1 py-0"
+                                onClick={copyId}
+                            >
+                                {copied ? <Check className="size-3 text-green-500" /> : <Copy className="size-3" />}
+                                {questionId}
+                            </Badge>
+                        </div>
+                        {data?.data?.appearances && data.data.appearances.length > 0 && (
+                            <div className="flex items-center gap-1.5 mt-1 text-xs text-muted-foreground">
+                                <LinkIcon className="size-3" />
+                                <span>Linked to:</span>
+                                <div className="flex flex-wrap gap-1">
+                                    {data.data.appearances.map((app: any) => (
+                                        <Badge key={app.sourceId} variant="secondary" className="px-1.5 py-0 text-[10px]">
+                                            {app.sourceTitle}
+                                        </Badge>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
 
             {/* Two-panel layout */}

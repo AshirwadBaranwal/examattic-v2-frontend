@@ -61,6 +61,8 @@ export const queryKeys = {
         list: (params?: Record<string, string | number | undefined>) =>
             ["questions", "list", params] as const,
         detail: (id: string) => ["questions", "detail", id] as const,
+        bySource: (sourceId: string) =>
+            ["questions", "bySource", sourceId] as const,
     },
 
     // ─── Student ─────────────────────────────────────────────

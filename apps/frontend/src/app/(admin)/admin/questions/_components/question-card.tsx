@@ -1,8 +1,9 @@
 "use client";
 
-import { Check, X, Zap, Target, AlertTriangle } from "lucide-react";
+import { Check, X, Zap, Target, AlertTriangle, Copy } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 import type { Question } from "./types";
 
 const difficultyConfig = {
@@ -21,6 +22,14 @@ interface QuestionCardProps {
 export function QuestionCard({ question, index, onEdit, onDelete }: QuestionCardProps) {
     const diff = difficultyConfig[question.difficulty];
     const DiffIcon = diff.icon;
+    const [copied, setCopied] = useState(false);
+
+    const copyId = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        navigator.clipboard.writeText(question.id);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500);
+    };
 
     return (
         <div
@@ -80,6 +89,17 @@ export function QuestionCard({ question, index, onEdit, onDelete }: QuestionCard
                         PYQ
                     </Badge>
                 )}
+                <Badge
+                    variant="outline"
+                    className="text-[10px] px-1.5 py-0 font-mono cursor-pointer gap-1 hover:bg-muted transition-colors"
+                    onClick={copyId}
+                >
+                    {copied ? (
+                        <><Check className="size-2.5 text-green-500" /> Copied</>
+                    ) : (
+                        <><Copy className="size-2.5" /> {question.id.slice(0, 8)}…</>
+                    )}
+                </Badge>
             </div>
         </div>
     );
