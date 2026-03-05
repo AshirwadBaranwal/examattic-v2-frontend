@@ -12,6 +12,23 @@ import type { AppEnv } from "./types/app";
 export function createApp() {
     const app = new Hono<AppEnv>();
 
+    // ─── CORS (Manual implementation for absolute control) ──────────────────
+    app.use("*", async (c, next) => {
+        const origin = c.req.header("Origin");
+        if (origin) {
+            c.header("Access-Control-Allow-Origin", origin);
+            c.header("Access-Control-Allow-Credentials", "true");
+            c.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, PATCH");
+            c.header("Access-Control-Allow-Headers", "Content-Type, Authorization, x-better-auth-secret");
+            c.header("Access-Control-Max-Age", "86400");
+        }
+
+        if (c.req.method === "OPTIONS") {
+            return c.body(null, 204);
+        }
+        await next();
+    });
+
     // ─── Global Error Handler ────────────────────────────────────────────────
     app.onError(globalErrorHandler);
 
@@ -26,31 +43,6 @@ export function createApp() {
             404
         );
     });
-
-    // ─── CORS ────────────────────────────────────────────────────────────────
-    app.use(
-        "*",
-        cors({
-            origin: (origin) => {
-                const allowedOrigins = [
-                    "http://localhost:3000",
-                    "https://examattic-v2-frontend.examattic.workers.dev"
-                ];
-                // If origin is in allowed list, return it.
-                // Note: browser origins never have trailing slashes.
-                if (allowedOrigins.includes(origin)) {
-                    return origin;
-                }
-                // Fallback for development or if origin is missing
-                return allowedOrigins[1];
-            },
-            allowHeaders: ["Content-Type", "Authorization", "x-better-auth-secret"],
-            allowMethods: ["POST", "GET", "OPTIONS", "PUT", "DELETE", "PATCH"],
-            exposeHeaders: ["Content-Length", "Set-Cookie"],
-            maxAge: 600,
-            credentials: true,
-        })
-    );
 
     // ─── Auth Instance Middleware ────────────────────────────────────────────
     // Creates the auth instance per-request (required for Workers env bindings)
