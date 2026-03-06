@@ -12,40 +12,23 @@ import type { AppEnv } from "./types/app";
 export function createApp() {
     const app = new Hono<AppEnv>();
 
-    // ─── CORS (Manual implementation for absolute control) ──────────────────
-    app.use("*", async (c, next) => {
-        const origin = c.req.header("Origin");
-        if (origin) {
-            c.header("Access-Control-Allow-Origin", origin);
-            c.header("Access-Control-Allow-Credentials", "true");
-            c.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, PATCH");
-            c.header("Access-Control-Allow-Headers", "Content-Type, Authorization, x-better-auth-secret");
-            c.header("Access-Control-Max-Age", "86400");
-        }
+    // 1. Move CORS to the VERY top
+    app.use("*", cors({
+        origin: (origin) => {
+            // Logic to allow your specific frontend or all
+            return origin.endsWith("examattic.workers.dev") ? origin : "https://examattic-v2-frontend.examattic.workers.dev";
+        },
+        allowMethods: ["POST", "GET", "OPTIONS", "PUT", "DELETE", "PATCH"],
+        allowHeaders: ["Content-Type", "Authorization", "x-better-auth-secret"],
+        exposeHeaders: ["Content-Length"],
+        maxAge: 86400,
+        credentials: true,
+    }));
 
-        if (c.req.method === "OPTIONS") {
-            return c.body(null, 204);
-        }
-        await next();
-    });
-
-    // ─── Global Error Handler ────────────────────────────────────────────────
+    // 2. Global Error Handler
     app.onError(globalErrorHandler);
 
-    // ─── 404 Handler ─────────────────────────────────────────────────────────
-    app.notFound((c) => {
-        return c.json(
-            {
-                success: false,
-                error: "NOT_FOUND",
-                message: "The requested endpoint does not exist.",
-            },
-            404
-        );
-    });
-
-    // ─── Auth Instance Middleware ────────────────────────────────────────────
-    // Creates the auth instance per-request (required for Workers env bindings)
+    // 3. Auth Instance (Needs to be before session middleware)
     app.use("*", async (c, next) => {
         const auth = createAuth({
             DATABASE_URL: c.env.DATABASE_URL,
@@ -56,8 +39,14 @@ export function createApp() {
         await next();
     });
 
-    // ─── Session Middleware (for all /api routes except auth) ─────────────────
-    app.use("/api/*", sessionMiddleware);
+    // 4. Session Middleware - EXCLUDE auth routes
+    // If you don't exclude /api/auth, your sign-in will fail because it has no session
+    app.use("/api/*", async (c, next) => {
+        if (c.req.path.startsWith("/api/auth")) {
+            return await next();
+        }
+        return sessionMiddleware(c, next);
+    });
 
     return app;
 }
