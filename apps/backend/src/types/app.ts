@@ -1,4 +1,5 @@
 import type { createAuth } from "../lib/auth";
+import { Auth } from "../lib/auth";
 
 // ─── Cloudflare Worker Bindings ──────────────────────────────────────────────
 export type Bindings = {
@@ -12,9 +13,9 @@ export type AuthUser = {
     id: string;
     name: string;
     email: string;
-    role: string | null;
-    image: string | null;
-    banned: boolean | null;
+    role?: string | null;
+    image?: string | null;
+    banned?: boolean | null;
     [key: string]: unknown;
 };
 

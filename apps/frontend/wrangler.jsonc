@@ -1,8 +1,8 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "main": ".open-next/worker.js",
-  "name": "examattic-frontend",
-  "compatibility_date": "2026-03-02",
+  "name": "examattic-v2-frontend",
+  "compatibility_date": "2026-03-01",
   "compatibility_flags": [
     "nodejs_compat"
   ],

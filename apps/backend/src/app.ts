@@ -16,6 +16,8 @@ export function createApp() {
     app.use("*", cors({
         origin: (origin) => {
             // Logic to allow your specific frontend or all
+            if (!origin) return "https://examattic-v2-frontend.examattic.workers.dev";
+            if (origin.startsWith("http://localhost")) return origin;
             return origin.endsWith("examattic.workers.dev") ? origin : "https://examattic-v2-frontend.examattic.workers.dev";
         },
         allowMethods: ["POST", "GET", "OPTIONS", "PUT", "DELETE", "PATCH"],
@@ -30,11 +32,7 @@ export function createApp() {
 
     // 3. Auth Instance (Needs to be before session middleware)
     app.use("*", async (c, next) => {
-        const auth = createAuth({
-            DATABASE_URL: c.env.DATABASE_URL,
-            BETTER_AUTH_SECRET: c.env.BETTER_AUTH_SECRET,
-            BETTER_AUTH_URL: c.env.BETTER_AUTH_URL,
-        });
+        const auth = createAuth(c.env);
         c.set("auth", auth);
         await next();
     });

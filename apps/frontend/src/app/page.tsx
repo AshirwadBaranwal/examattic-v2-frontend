@@ -9,8 +9,8 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-background px-4">
       <div className="flex flex-col items-center gap-6 text-center">
-        <div className="flex size-16 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
-          <GraduationCap className="size-8" />
+        <div className="flex size-16 items-center justify-center rounded-2xl bg-primary text-primary-foreground" suppressHydrationWarning>
+          <GraduationCap className="size-8" suppressHydrationWarning />
         </div>
         <div className="space-y-2">
           <h1 className="text-4xl font-bold tracking-tight text-foreground">
